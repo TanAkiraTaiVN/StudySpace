@@ -1,0 +1,43 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+.vscode/
+*.lock.json
+project.lock.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local DB
+*.db
+*.db-shm
+*.db-wal
+
+# Uploads
+StudySpace.API/wwwroot/uploads/
+
+# Rider / VS / VS Code
+.idea/
+.vs/
+*.swp
+
+# MAUI / Android build artifacts
+**/Resources/Raw/_*
+**/AppPackages/
+**/*.apk
+**/*.aab
+**/*.ipa
+*.binlog
+
+# NuGet
+**/.config/dotnet-tools.json
+*.nupkg
+**/packages/
+
+# Logs
+*.log
+logs/

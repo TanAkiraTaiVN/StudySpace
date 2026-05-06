@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore StudySpace.sln
+
+      - name: Build
+        run: dotnet build StudySpace.sln --configuration Release --no-restore
+
+      - name: Smoke test (start API and probe Swagger)
+        run: |
+          rm -f StudySpace.API/StudySpace.db
+          dotnet run --project StudySpace.API/StudySpace.API.csproj --configuration Release --no-build --urls "http://127.0.0.1:5050" &
+          API_PID=$!
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:5050/swagger/v1/swagger.json > /dev/null; then
+              echo "API up"
+              break
+            fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:5050/swagger/v1/swagger.json > /dev/null
+          curl -fsS http://127.0.0.1:5050/ > /dev/null
+          curl -fsS -X POST http://127.0.0.1:5050/api/auth/login \
+            -H "Content-Type: application/json" \
+            -d '{"email":"admin@studyspace.com","password":"Admin@123"}' \
+            | grep -q '"success":true'
+          kill $API_PID || true

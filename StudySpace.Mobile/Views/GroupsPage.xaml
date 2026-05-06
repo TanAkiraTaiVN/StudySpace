@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:m="clr-namespace:StudySpace.Mobile.Services"
+             x:Class="StudySpace.Mobile.Views.GroupsPage"
+             Title="Nhóm học">
+
+    <Grid RowDefinitions="Auto,*" Padding="12" RowSpacing="10">
+
+        <Border Grid.Row="0" Stroke="#E5E7EB" StrokeShape="RoundRectangle 12" Padding="10" BackgroundColor="White">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                <Entry Grid.Column="0" Text="{Binding InviteCode}" Placeholder="Nhập mã mời để tham gia nhóm..." />
+                <Button Grid.Column="1" Text="Tham gia" Command="{Binding JoinCommand}" BackgroundColor="#4F46E5" TextColor="White" />
+            </Grid>
+        </Border>
+
+        <RefreshView Grid.Row="1" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsBusy}">
+            <CollectionView ItemsSource="{Binding Groups}">
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8" Padding="20">
+                        <Label Text="Bạn chưa tham gia nhóm nào." TextColor="Gray" HorizontalOptions="Center" />
+                        <Label Text="Kéo xuống để làm mới." TextColor="Gray" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="m:GroupModel">
+                        <Border Stroke="#E5E7EB" StrokeShape="RoundRectangle 12" Padding="14" Margin="0,4" BackgroundColor="White">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="{Binding Name}" FontSize="17" FontAttributes="Bold" />
+                                <Label Text="{Binding Subject}" TextColor="#4F46E5" FontSize="13" />
+                                <Label Text="{Binding Description}" FontSize="13" TextColor="Gray" MaxLines="2" LineBreakMode="TailTruncation" />
+                                <HorizontalStackLayout Spacing="14" Margin="0,4,0,0">
+                                    <Label Text="{Binding MemberCount, StringFormat='Thành viên: {0}'}" FontSize="12" TextColor="Gray" />
+                                    <Label Text="{Binding DocumentCount, StringFormat='Tài liệu: {0}'}" FontSize="12" TextColor="Gray" />
+                                    <Label Text="{Binding ScheduleCount, StringFormat='Lịch: {0}'}" FontSize="12" TextColor="Gray" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="6" Margin="0,4,0,0">
+                                    <Label Text="Mã mời:" FontSize="12" TextColor="Gray" />
+                                    <Label Text="{Binding InviteCode}" FontSize="12" FontAttributes="Bold" TextColor="#4F46E5" />
+                                    <Label Text="{Binding MyRole, StringFormat='[{0}]'}" FontSize="12" TextColor="#10B981" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+    </Grid>
+
+</ContentPage>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:m="clr-namespace:StudySpace.Mobile.Services"
+             x:Class="StudySpace.Mobile.Views.ChatPage"
+             Title="Trò chuyện">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="12" RowSpacing="6">
+
+        <Picker Grid.Row="0" Title="Chọn nhóm"
+                ItemsSource="{Binding Groups}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding SelectedGroup, Mode=TwoWay}" />
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Messages}">
+            <CollectionView.EmptyView>
+                <Label Text="Chưa có tin nhắn." TextColor="Gray" HorizontalOptions="Center" Margin="0,40" />
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:ChatMessageModel">
+                    <Border Stroke="#E5E7EB" StrokeShape="RoundRectangle 10" Padding="10" Margin="0,3" BackgroundColor="White">
+                        <VerticalStackLayout Spacing="2">
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="{Binding SenderName}" FontSize="12" FontAttributes="Bold" TextColor="#4F46E5" />
+                                <Label Text="·" FontSize="12" TextColor="Gray" />
+                                <Label Text="{Binding SentAtText}" FontSize="11" TextColor="Gray" />
+                            </HorizontalStackLayout>
+                            <Label Text="{Binding Content}" FontSize="14" />
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Grid Grid.Row="2" ColumnDefinitions="*,Auto" ColumnSpacing="6">
+            <Entry Grid.Column="0" Text="{Binding Draft}" Placeholder="Nhập tin nhắn..." />
+            <Button Grid.Column="1" Text="Gửi" Command="{Binding SendCommand}" BackgroundColor="#4F46E5" TextColor="White" />
+        </Grid>
+
+    </Grid>
+
+</ContentPage>
