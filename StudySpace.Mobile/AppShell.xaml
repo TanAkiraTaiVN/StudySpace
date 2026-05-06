@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="StudySpace.Mobile.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:StudySpace.Mobile.Views"
+    Shell.FlyoutBehavior="Flyout"
+    Title="StudySpace">
+
+    <Shell.FlyoutHeader>
+        <Grid HeightRequest="120" BackgroundColor="#4F46E5">
+            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                <Label Text="StudySpace" TextColor="White" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
+                <Label Text="Học nhóm &amp; tài liệu" TextColor="White" FontSize="13" HorizontalOptions="Center" />
+            </VerticalStackLayout>
+        </Grid>
+    </Shell.FlyoutHeader>
+
+    <ShellContent Title="Đăng nhập" Route="login"
+                  ContentTemplate="{DataTemplate views:LoginPage}"
+                  FlyoutItemIsVisible="False" />
+
+    <FlyoutItem Title="Nhóm học" Icon="dotnet_bot.png">
+        <ShellContent Title="Nhóm học" Route="groups"
+                      ContentTemplate="{DataTemplate views:GroupsPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Lịch học" Icon="dotnet_bot.png">
+        <ShellContent Title="Lịch học" Route="schedules"
+                      ContentTemplate="{DataTemplate views:SchedulesPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Tài liệu" Icon="dotnet_bot.png">
+        <ShellContent Title="Tài liệu" Route="documents"
+                      ContentTemplate="{DataTemplate views:DocumentsPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Trò chuyện" Icon="dotnet_bot.png">
+        <ShellContent Title="Trò chuyện" Route="chat"
+                      ContentTemplate="{DataTemplate views:ChatPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Thông báo" Icon="dotnet_bot.png">
+        <ShellContent Title="Thông báo" Route="notifications"
+                      ContentTemplate="{DataTemplate views:NotificationsPage}" />
+    </FlyoutItem>
+
+    <MenuItem Text="Đăng xuất" IconImageSource="dotnet_bot.png" Clicked="OnLogoutClicked" />
+
+</Shell>
